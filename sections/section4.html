@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Раздел 5: Фоновые задания и управляемые формы - Учебный курс</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .code-example {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .code-keyword {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        .code-string {
+            color: #2ecc71;
+        }
+        
+        .code-comment {
+            color: #95a5a6;
+            font-style: italic;
+        }
+        
+        .code-number {
+            color: #e74c3c;
+        }
+        
+        .exercise-list {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 4px solid #9b59b6;
+        }
+        
+        .exercise-list h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .exercise-list ol {
+            padding-left: 20px;
+        }
+        
+        .exercise-list li {
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+        
+        .info-box {
+            background: #e8f4fc;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .architecture-diagram {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 30px 0;
+        }
+        
+        .workflow-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            padding: 0 10px;
+        }
+        
+        .step-circle {
+            width: 50px;
+            height: 50px;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .step-connector {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: #3498db;
+            z-index: -1;
+        }
+        
+        .step-content {
+            background: #f5f7fa;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 100px;
+        }
+        
+        .step-content h5 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border-top: 4px solid #2ecc71;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .feature-card h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table th {
+            background: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .warning-box {
+            background: #fff8e1;
+            border-left: 4px solid #ffb300;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <h1><i class="fas fa-tasks"></i> Раздел 5: Фоновые задания и управляемые формы</h1>
+            <p>Асинхронные операции и современный интерфейс в 1С</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="../index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Назад к разделам
+        </a>
+
+        <div class="lecture-container">
+            <h1 class="lecture-title">Фоновые задания и управляемые формы в 1С</h1>
+            
+            <div class="lecture-content">
+                <h3>1. Механизм фоновых заданий</h3>
+                <p>Фоновые задания позволяют выполнять длительные операции асинхронно, без блокировки интерфейса пользователя. Это критически важно для операций, требующих значительного времени (обработка больших объемов данных, сложные расчеты, интеграция с внешними системами).</p>
+                
+                <div class="architecture-diagram">
+                    <h4>Работа фоновых заданий</h4>
+                    <div class="workflow-steps">
+                        <div class="workflow-step">
+                            <div class="step-circle">1</div>
+                            <div class="step-connector"></div>
+                            <div class="step-content">
+                                <h5>Создание задания</h5>
+                                <p>Пользователь запускает операцию из интерфейса, система создает фоновое задание с параметрами</p>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-circle">2</div>
+                            <div class="step-connector"></div>
+                            <div class="step-content">
+                                <h5>Постановка в очередь</h5>
+                                <p>Задание помещается в очередь выполнения на сервере, пользователь может продолжать работу</p>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-circle">3</div>
+                            <div class="step-connector"></div>
+                            <div class="step-content">
+                                <h5>Выполнение</h5>
+                                <p>Сервер выполняет задание в фоновом режиме, сохраняя промежуточные результаты</p>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-circle">4</div>
+                            <div class="step-content">
+                                <h5>Завершение</h5>
+                                <p>Пользователь получает уведомление о завершении, может просмотреть результаты или ошибки</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Важно:</strong> Фоновые задания выполняются в контексте конкретного пользователя, но без интерактивного взаимодействия. Они имеют ограничения по времени выполнения и ресурсам.</p>
+                </div>
+                
+                <h3>2. Управляемые формы</h3>
+                <p>Управляемые формы — это современный подход к созданию интерфейса в платформе 1С, основанный на декларативном описании и автоматической генерации. Они обеспечивают кроссплатформенность и адаптивность интерфейса.</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h4><i class="fas fa-desktop"></i> Адаптивный дизайн</h4>
+                        <p>Автоматическая адаптация под разные устройства и разрешения экрана</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4><i class="fas fa-bolt"></i> Разделение логики</h4>
+                        <p>Четкое разделение на клиентскую и серверную части выполнения</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4><i class="fas fa-sync-alt"></i> Реактивность</h4>
+                        <p>Автоматическое обновление интерфейса при изменении данных</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4><i class="fas fa-puzzle-piece"></i> Компонентность</h4>
+                        <p>Возможность повторного использования элементов интерфейса</p>
+                    </div>
+                </div>
+                
+                <h3>3. Основные компоненты управляемых форм</h3>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Компонент</th>
+                            <th>Назначение</th>
+                            <th>Пример использования</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Реквизиты формы</strong></td>
+                            <td>Хранение данных формы, связь с объектами метаданных</td>
+                            <td>Хранение текущего документа, параметров отбора</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Команды</strong></td>
+                            <td>Действия, доступные пользователю (кнопки, пункты меню)</td>
+                            <td>"Записать", "Провести", "Сформировать отчет"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Элементы формы</strong></td>
+                            <td>Визуальные компоненты для отображения и редактирования данных</td>
+                            <td>Поля ввода, таблицы, флажки, переключатели</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Модуль формы</strong></td>
+                            <td>Обработчики событий и бизнес-логика работы с формой</td>
+                            <td>Валидация данных, динамическое изменение формы</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>4. Интеграция фоновых заданий и управляемых форм</h3>
+                <p>Фоновые задания часто запускаются из управляемых форм, а результаты их выполнения отображаются через тот же интерфейс. Это требует правильной организации взаимодействия:</p>
+                <ul>
+                    <li><strong>Запуск задания:</strong> Из клиентской части формы выполняется вызов серверного метода, который создает фоновое задание</li>
+                    <li><strong>Отслеживание прогресса:</strong> Через механизм опроса или события отслеживается статус выполнения</li>
+                    <li><strong>Отображение результатов:</strong> После завершения задания форма обновляется для показа результатов</li>
+                    <li><strong>Обработка ошибок:</strong> Пользователю предоставляется информация об ошибках в выполнении</li>
+                </ul>
+                
+                <div class="info-box">
+                    <p><strong>Лучшая практика:</strong> Для длительных операций всегда используйте фоновые задания, чтобы не блокировать работу пользователей. В управляемых формах реализуйте индикатор прогресса и возможность отмены операции.</p>
+                </div>
+                
+                <!-- Контрольные вопросы -->
+                <div class="questions-section">
+                    <h2 class="questions-title">Контрольные вопросы</h2>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 1: Что такое фоновые задания и в каких случаях их следует использовать?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Фоновые задания — это механизм асинхронного выполнения длительных операций без блокировки интерфейса; их следует использовать для обработки больших объемов данных, сложных расчетов, интеграции с внешними системами и других операций, занимающих более нескольких секунд.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 2: Каковы основные преимущества управляемых форм перед обычными?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Основные преимущества управляемых форм включают адаптивный дизайн под разные устройства, четкое разделение клиентской и серверной логики, автоматическую генерацию интерфейса, реактивность и возможность повторного использования компонентов.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 3: Как организовать отслеживание прогресса выполнения фонового задания?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Прогресс выполнения отслеживается через периодический опрос статуса задания с клиентской стороны или через механизм событий; для этого используется метод ПолучитьФоновыеЗадания() и проверка свойства Выполнение.Статус с отображением индикатора прогресса в интерфейсе.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 4: Что такое реквизиты формы и чем они отличаются от элементов формы?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Реквизиты формы — это данные, хранимые в форме (переменные, привязанные к объектам метаданных), а элементы формы — это визуальные компоненты для отображения и редактирования этих данных; один реквизит может быть связан с несколькими элементами формы.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 5: Какие ограничения существуют для фоновых заданий в 1С?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Фоновые задания имеют ограничения по времени выполнения (по умолчанию 10 минут), не имеют доступа к интерактивным элементам интерфейса, выполняются в контексте сервера и требуют правильной настройки кластера серверов для работы.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 6: Как организовать взаимодействие между клиентской и серверной частями в управляемых формах?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Взаимодействие организуется через специальные директивы &НаКлиенте и &НаСервере, которые указывают, где выполняется код; для вызова серверных методов из клиентского кода используется конструкция ВыполнитьНаСервере(), а результаты возвращаются через возвращаемые значения функций.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Упражнения для самостоятельной работы -->
+                <div class="exercise-list">
+                    <h3><i class="fas fa-tasks"></i> Упражнения для самостоятельной работы:</h3>
+                    <ol>
+                        <li>Создайте фоновое задание для массовой обработки данных справочника</li>
+                        <li>Разработайте управляемую форму с табличной частью и командами</li>
+                        <li>Реализуйте запуск фонового задания из формы с отображением прогресса</li>
+                    </ol>
+                    
+                    <h4 style="margin-top: 25px; color: #2c3e50;">Пример выполнения (упражнение 3):</h4>
+                    <div class="code-example">
+                        <span class="code-comment">// Модуль управляемой формы "ОбработкаМассивныхДанных"</span><br>
+                        <br>
+                        <span class="code-comment">&НаКлиенте</span><br>
+                        <span class="code-keyword">Процедура</span> ОбработатьДанные(Команда)<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Показываем индикатор прогресса</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ПоказатьОжидание(<span class="code-string">"Запуск фонового задания..."</span>);<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Вызываем серверный метод для создания фонового задания</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ИдентификаторЗадания = ВыполнитьНаСервере(СоздатьФоновоеЗадание);<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Запускаем отслеживание выполнения</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ПодпискаНаОбновление = Новый УникальныйИдентификатор;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ПодписатьсяНаОбработкуОжидания(<span class="code-string">"ПроверитьСтатусЗадания"</span>, ПодпискаНаОбновление, <span class="code-number">1</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ДанныеФормы.ИдентификаторЗадания = ИдентификаторЗадания;<br>
+                        <br>
+                        <span class="code-keyword">КонецПроцедуры</span><br>
+                        <br>
+                        <span class="code-comment">&НаКлиенте</span><br>
+                        <span class="code-keyword">Процедура</span> ПроверитьСтатусЗадания()<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">Если</span> <span class="code-keyword">Не</span> ЗначениеЗаполнено(ДанныеФормы.ИдентификаторЗадания) <span class="code-keyword">Тогда</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    <span class="code-keyword">Возврат</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">КонецЕсли</span>;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Получаем статус задания с сервера</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Статус = ВыполнитьНаСервере(ПолучитьСтатусЗадания, ДанныеФормы.ИдентификаторЗадания);<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">Если</span> Статус = <span class="code-keyword">Неопределено</span> <span class="code-keyword">Тогда</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    <span class="code-comment">// Задание завершено или удалено</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    ПрерватьОжидание();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    <span class="code-keyword">Сообщить</span>(<span class="code-string">"Обработка завершена"</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    ДанныеФормы.ИдентификаторЗадания = <span class="code-keyword">Неопределено</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    <span class="code-keyword">Возврат</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">ИначеЕсли</span> Статус.Выполнено <span class="code-keyword">Тогда</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    <span class="code-comment">// Задание выполнено успешно</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    ПрерватьОжидание();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    <span class="code-keyword">Сообщить</span>(<span class="code-string">"Обработано элементов: "</span> + Статус.Обработано + <span class="code-string">" из "</span> + Статус.Всего);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    ДанныеФормы.ИдентификаторЗадания = <span class="code-keyword">Неопределено</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    ОбновитьДанныеФормы();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">Иначе</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    <span class="code-comment">// Показываем прогресс</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    Процент = Статус.Обработано * <span class="code-number">100</span> / Статус.Всего;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    ПоказатьОжидание(<span class="code-string">"Выполняется обработка: "</span> + <span class="code-keyword">Формат</span>(Процент, <span class="code-string">"ЧДЦ=2"</span>) + <span class="code-string">"% ("</span> + Статус.Обработано + <span class="code-string">" из "</span> + Статус.Всего + <span class="code-string">")"</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    <span class="code-comment">// Продолжаем опрос через 1 секунду</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    ПодписатьсяНаОбработкуОжидания(<span class="code-string">"ПроверитьСтатусЗадания"</span>, Новый УникальныйИдентификатор, <span class="code-number">1</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">КонецЕсли</span>;<br>
+                        <br>
+                        <span class="code-keyword">КонецПроцедуры</span><br>
+                        <br>
+                        <span class="code-comment">&НаСервере</span><br>
+                        <span class="code-keyword">Функция</span> СоздатьФоновоеЗадание()<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Создаем фоновое задание</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ФоновоеЗадание = ФоновыеЗадания.СоздатьЗадание(<span class="code-string">"ОбработкаДанных"</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ФоновоеЗадание.Ключ = Новый УникальныйИдентификатор;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ФоновоеЗадание.Метод = <span class="code-string">"ВыполнитьОбработкуДанных"</span>;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Передаем параметры</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Параметры = Новый Структура;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Параметры.Вставить(<span class="code-string">"ДатаНачала"</span>, ТекущаяДата() - <span class="code-number">30</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Параметры.Вставить(<span class="code-string">"ДатаОкончания"</span>, ТекущаяДата());<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ФоновоеЗадание.Параметры = Параметры;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Запускаем задание</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ФоновоеЗадание.Записать();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ФоновоеЗадание.Выполнить();<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">Возврат</span> ФоновоеЗадание.Ключ;<br>
+                        <br>
+                        <span class="code-keyword">КонецФункции</span><br>
+                        <br>
+                        <span class="code-comment">&НаСервереБезКонтекста</span><br>
+                        <span class="code-keyword">Процедура</span> ВыполнитьОбработкуДанных(Ключ, Параметры) <span class="code-keyword">Экспорт</span><br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Длительная операция в фоновом режиме</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ВсегоЭлементов = <span class="code-number">1000</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Обработано = <span class="code-number">0</span>;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">Для</span> Счетчик = <span class="code-number">1</span> <span class="code-keyword">По</span> ВсегоЭлементов <span class="code-keyword">Цикл</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    <span class="code-comment">// Имитация обработки</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    Ожидать(<span class="code-number">0.1</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    Обработано = Обработано + <span class="code-number">1</span>;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    <span class="code-comment">// Сохраняем прогресс каждые 10 элементов</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    <span class="code-keyword">Если</span> Обработано % <span class="code-number">10</span> = <span class="code-number">0</span> <span class="code-keyword">Тогда</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;        ФоновыеЗадания.СохранитьРезультат(Ключ, <span class="code-keyword">Новый Структура</span>(<span class="code-string">"Обработано, Всего"</span>, Обработано, ВсегоЭлементов));<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    <span class="code-keyword">КонецЕсли</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">КонецЦикла</span>;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Фиксируем завершение</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ФоновыеЗадания.СохранитьРезультат(Ключ, <span class="code-keyword">Новый Структура</span>(<span class="code-string">"Выполнено, Обработано, Всего"</span>, <span class="code-keyword">Истина</span>, Обработано, ВсегоЭлементов));<br>
+                        <br>
+                        <span class="code-keyword">КонецПроцедуры</span>
+                    </div>
+                    
+                    <div class="info-box">
+                        <p><strong>Подсказка для упражнения 1:</strong> Создайте обработку, которая в фоновом режиме обновляет цены номенклатуры по заданному проценту или синхронизирует данные с внешним источником. Используйте метод СохранитьРезультат() для сохранения промежуточного прогресса.</p>
+                        <p><strong>Подсказка для упражнения 2:</strong> Разработайте форму справочника с табличной частью, добавьте команды для групповых операций (отметить все, снять выделение, выполнить действие с выделенными), реализуйте контекстное меню и горячие клавиши.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="section4.html" class="btn">
+                    <i class="fas fa-arrow-left"></i> Предыдущий раздел
+                </a>
+                <a href="../index.html" class="btn">
+                    <i class="fas fa-home"></i> К списку разделов
+                </a>
+                <a href="section6.html" class="btn">
+                    Следующий раздел <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 Учебный курс. Раздел 5: Фоновые задания и управляемые формы</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
