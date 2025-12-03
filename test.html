@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестирование по 1С - Учебный курс</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .test-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        .test-header h1 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .test-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .question-container {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .question-number {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 0.5rem;
+        }
+        
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+        
+        .options-grid {
+            display: grid;
+            gap: 0.8rem;
+        }
+        
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .option-label:hover {
+            border-color: #3498db;
+            background: #f0f8ff;
+        }
+        
+        .option-label.selected {
+            border-color: #3498db;
+            background: #e8f4fc;
+        }
+        
+        .option-label.correct {
+            border-color: #27ae60;
+            background: #e8f5e9;
+        }
+        
+        .option-label.incorrect {
+            border-color: #e74c3c;
+            background: #ffebee;
+        }
+        
+        .option-radio {
+            margin-right: 1rem;
+            margin-top: 0.2rem;
+        }
+        
+        .option-text {
+            flex: 1;
+        }
+        
+        .option-number {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            margin-right: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .test-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eaeaea;
+        }
+        
+        .result-container {
+            display: none;
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .result-title {
+            font-size: 1.8rem;
+            color: #27ae60;
+            margin-bottom: 1rem;
+        }
+        
+        .result-score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 1rem 0;
+        }
+        
+        .result-message {
+            font-size: 1.1rem;
+            color: #34495e;
+            margin-bottom: 1.5rem;
+        }
+        
+        .progress-ring {
+            margin: 0 auto 1.5rem;
+        }
+        
+        .progress-ring-circle {
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        
+        .progress-ring-background {
+            fill: none;
+            stroke: #e0e0e0;
+            stroke-width: 8;
+        }
+        
+        .progress-ring-foreground {
+            fill: none;
+            stroke: #3498db;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        
+        .progress-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            fill: #2c3e50;
+        }
+        
+        .progress-label {
+            font-size: 1rem;
+            fill: #7f8c8d;
+        }
+        
+        .result-details {
+            text-align: left;
+            margin-top: 2rem;
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .timer {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        @media (max-width: 768px) {
+            .test-container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            .test-controls {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <h1><i class="fas fa-file-alt"></i> Тестирование по курсу 1С</h1>
+            <p>Проверьте свои знания по основам разработки в 1С</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Назад к разделам
+        </a>
+
+        <div class="test-container">
+            <div class="test-header">
+                <h1>Итоговый тест по курсу 1С</h1>
+                <p>Ответьте на 20 вопросов для проверки знаний</p>
+                
+                <div class="test-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="current-question">1</div>
+                        <div>Текущий вопрос</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="answered-count">0</div>
+                        <div>Отвечено</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="timer" id="timer">
+                            <i class="fas fa-clock"></i>
+                            <span>30:00</span>
+                        </div>
+                        <div>Осталось времени</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Контейнер для вопросов -->
+            <div id="questions-container">
+                <!-- Вопросы будут сгенерированы JavaScript -->
+            </div>
+
+            <!-- Результаты теста -->
+            <div class="result-container" id="result-container">
+                <h2 class="result-title">Тест завершен!</h2>
+                
+                <div class="progress-ring">
+                    <svg width="200" height="200" viewBox="0 0 200 200">
+                        <circle class="progress-ring-background" cx="100" cy="100" r="90"></circle>
+                        <circle class="progress-ring-foreground" cx="100" cy="100" r="90" 
+                                stroke-dasharray="565.48" stroke-dashoffset="565.48" id="progress-circle"></circle>
+                        <text x="100" y="100" text-anchor="middle" dy=".3em" class="progress-text" id="progress-text">0%</text>
+                        <text x="100" y="125" text-anchor="middle" dy=".3em" class="progress-label">правильных ответов</text>
+                    </svg>
+                </div>
+                
+                <div class="result-score" id="final-score">0/20</div>
+                
+                <div class="result-message" id="result-message">
+                    Начните проходить тест, чтобы увидеть результат
+                </div>
+                
+                <div class="result-details">
+                    <div class="detail-item">
+                        <span>Правильных ответов:</span>
+                        <strong id="correct-count">0</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Неправильных ответов:</span>
+                        <strong id="incorrect-count">0</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Время прохождения:</span>
+                        <strong id="time-taken">00:00</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Процент правильных:</span>
+                        <strong id="percentage">0%</strong>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem;">
+                    <button class="btn" onclick="restartTest()">
+                        <i class="fas fa-redo"></i> Пройти тест заново
+                    </button>
+                </div>
+            </div>
+
+            <div class="test-controls">
+                <button class="btn" onclick="prevQuestion()" id="prev-btn">
+                    <i class="fas fa-arrow-left"></i> Предыдущий вопрос
+                </button>
+                
+                <button class="btn" onclick="nextQuestion()" id="next-btn">
+                    Следующий вопрос <i class="fas fa-arrow-right"></i>
+                </button>
+                
+                <button class="btn" onclick="checkTest()" id="check-btn" style="background: linear-gradient(135deg, #27ae60, #2ecc71);">
+                    <i class="fas fa-check-circle"></i> Проверить тест
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 Учебный курс. Итоговое тестирование по 1С</p>
+        </div>
+    </footer>
+
+    <script>
+        // Вопросы и ответы
+        const questions = [
+            {
+                question: "Какой тип данных в 1С используется для хранения коллекции 'ключ-значение'?",
+                options: [
+                    "Массив",
+                    "Структура",
+                    "Соответствие",
+                    "СписокЗначений"
+                ],
+                correct: 2, // Соответствие
+                explanation: "Соответствие — это коллекция пар «ключ-значение», где каждый элемент состоит из ключа и связанного с ним значения."
+            },
+            {
+                question: "Что такое модуль менеджера в 1С?",
+                options: [
+                    "Модуль, содержащий методы для работы с объектами метаданных",
+                    "Модуль, отвечающий за интерфейс пользователя",
+                    "Модуль для хранения глобальных переменных",
+                    "Модуль обработки событий формы"
+                ],
+                correct: 0,
+                explanation: "Модуль менеджера содержит общие методы для работы со всеми объектами данного типа метаданных (создание, поиск, массовые операции)."
+            },
+            {
+                question: "Какая функция используется для вывода сообщения пользователю?",
+                options: [
+                    "ПоказатьСообщение()",
+                    "ВывестиТекст()",
+                    "Сообщить()",
+                    "Оповестить()"
+                ],
+                correct: 2,
+                explanation: "Функция Сообщить() используется для вывода информационных сообщений пользователю в виде модального окна."
+            },
+            {
+                question: "Что такое проведение документа в 1С?",
+                options: [
+                    "Изменение номера документа",
+                    "Формирование движений по регистрам",
+                    "Печать документа",
+                    "Отправка документа по email"
+                ],
+                correct: 1,
+                explanation: "Проведение документа — это процесс формирования движений по регистрам, который отражает хозяйственную операцию в учете."
+            },
+            {
+                question: "Какой объект метаданных используется для хранения остатков товаров?",
+                options: [
+                    "Регистр сведений",
+                    "Регистр накопления Остатки",
+                    "Регистр бухгалтерии",
+                    "Регистр расчета"
+                ],
+                correct: 1,
+                explanation: "Регистр накопления с видом 'Остатки' предназначен для хранения количественных и стоимостных остатков товаров."
+            },
+            {
+                question: "Как правильно объявить переменную в 1С?",
+                options: [
+                    "variable ИмяПеременной;",
+                    "Перем ИмяПеременной;",
+                    "var ИмяПеременной;",
+                    "Dim ИмяПеременной;"
+                ],
+                correct: 1,
+                explanation: "Ключевое слово 'Перем' используется для объявления переменных в языке 1С."
+            },
+            {
+                question: "Что выведет следующий код?\n\nЗначение = 10;\nЕсли Значение > 5 Тогда\n    Сообщить('Больше');\nИначеЕсли Значение = 5 Тогда\n    Сообщить('Равно');\nИначе\n    Сообщить('Меньше');\nКонецЕсли;",
+                options: [
+                    "Больше",
+                    "Равно",
+                    "Меньше",
+                    "Ничего"
+                ],
+                correct: 0,
+                explanation: "Так как значение переменной равно 10, что больше 5, будет выполнена первая ветка условия и выведено сообщение 'Больше'."
+            },
+            {
+                question: "Как создать новый массив в 1С?",
+                options: [
+                    "Массив = [];",
+                    "Массив = Новый List;",
+                    "Массив = Новый Массив;",
+                    "Массив = СоздатьМассив();"
+                ],
+                correct: 2,
+                explanation: "Для создания нового массива используется конструктор 'Новый Массив'."
+            },
+            {
+                question: "Какая конструкция используется для перебора элементов коллекции?",
+                options: [
+                    "Для i От 1 До N Цикл",
+                    "Для Каждого Элемент Из Коллекция Цикл",
+                    "Пока Условие Цикл",
+                    "Цикл Для Коллекция"
+                ],
+                correct: 1,
+                explanation: "Конструкция 'Для Каждого Элемент Из Коллекция Цикл' используется для перебора всех элементов коллекции."
+            },
+            {
+                question: "Как правильно выполнить запрос к базе данных?",
+                options: [
+                    "Запрос = Запрос();",
+                    "Запрос = Новый Запрос;",
+                    "Запрос = СоздатьЗапрос();",
+                    "Запрос = БазовыйЗапрос();"
+                ],
+                correct: 1,
+                explanation: "Для создания объекта запроса используется конструктор 'Новый Запрос'."
+            },
+            {
+                question: "В каком случае документ не будет проведен?",
+                options: [
+                    "Если не заполнена дата документа",
+                    "Если не заполнен номер документа",
+                    "Если установлен параметр 'Отказ' в процедуре проведения",
+                    "Если документ уже проведен"
+                ],
+                correct: 2,
+                explanation: "Если в процедуре проведения документа установить параметр 'Отказ' в значение Истина, проведение документа будет отменено."
+            },
+            {
+                question: "Что такое СКД в 1С?",
+                options: [
+                    "Система контроля данных",
+                    "Сервис комплексной диагностики",
+                    "Система компоновки данных",
+                    "Среда разработки конфигураций"
+                ],
+                correct: 2,
+                explanation: "СКД — Система Компоновки Данных, универсальный механизм для построения отчетов и обработок в 1С."
+            },
+            {
+                question: "Какой механизм используется для организации многопользовательской работы?",
+                options: [
+                    "Блокировка интерфейса",
+                    "Очередь сообщений",
+                    "Управление блокировками данных",
+                    "Кэширование запросов"
+                ],
+                correct: 2,
+                explanation: "Управление блокировками данных на уровне СУБД обеспечивает корректную работу нескольких пользователей с одними данными."
+            },
+            {
+                question: "Для чего используется регистр бухгалтерии?",
+                options: [
+                    "Для хранения справочной информации",
+                    "Для ведения бухгалтерского учета по счетам",
+                    "Для расчета зарплаты",
+                    "Для хранения остатков товаров"
+                ],
+                correct: 1,
+                explanation: "Регистр бухгалтерии предназначен для ведения бухгалтерского учета по плану счетов с поддержкой двойной записи."
+            },
+            {
+                question: "Что такое общие модули?",
+                options: [
+                    "Модули для хранения общих переменных",
+                    "Модули с общими процедурами и функциями",
+                    "Модули общих форм",
+                    "Модули общих отчетов"
+                ],
+                correct: 1,
+                explanation: "Общие модули содержат процедуры и функции, доступные из разных частей конфигурации."
+            },
+            {
+                question: "Пользователь жалуется на медленную работу отчета. Что следует проверить в первую очередь?",
+                options: [
+                    "Настройки интерфейса",
+                    "Оптимизацию запросов и индексов",
+                    "Цветовую схему формы",
+                    "Названия колонок в отчете"
+                ],
+                correct: 1,
+                explanation: "Наиболее частая причина медленной работы отчетов — неоптимизированные запросы и отсутствие индексов в базе данных."
+            },
+            {
+                question: "При проведении документа возникает ошибка 'Объект не найден'. В чем наиболее вероятная причина?",
+                options: [
+                    "Неправильный формат даты",
+                    "Отсутствует ссылочный объект (например, номенклатура)",
+                    "Не заполнен комментарий",
+                    "Неправильный шрифт в документе"
+                ],
+                correct: 1,
+                explanation: "Ошибка 'Объект не найден' обычно возникает при попытке использовать ссылку на несуществующий объект (удаленный или некорректно указанный)."
+            },
+            {
+                question: "Как организовать проверку уникальности кода в справочнике?",
+                options: [
+                    "В форме элемента добавить проверку",
+                    "В модуле объекта использовать обработку проверки заполнения",
+                    "В отчете по справочнику",
+                    "В модуле менеджера"
+                ],
+                correct: 1,
+                explanation: "Проверка уникальности кода настраивается в свойствах реквизита 'Код' справочника через обработку проверки заполнения."
+            },
+            {
+                question: "Что делать, если нужно изменить тип уже используемого реквизита?",
+                options: [
+                    "Изменить тип напрямую в конфигураторе",
+                    "Создать новый реквизит и перенести данные",
+                    "Удалить все данные и изменить тип",
+                    "Обратиться в службу поддержки 1С"
+                ],
+                correct: 1,
+                explanation: "Изменение типа используемого реквизита требует создания нового реквизита с нужным типом и переноса данных с последующим удалением старого."
+            },
+            {
+                question: "Как оптимально получить данные за последние 30 дней?",
+                options: [
+                    "Перебрать все записи в цикле",
+                    "Использовать запрос с условием по дате",
+                    "Создать отдельный регистр",
+                    "Хранить данные в массиве"
+                ],
+                correct: 1,
+                explanation: "Использование запроса с условием по дате через конструкцию 'ГДЕ Дата >= &ДатаНачала' — наиболее оптимальный способ выборки данных за период."
+            }
+        ];
+
+        // Переменные состояния теста
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let testCompleted = false;
+        let startTime = new Date();
+        let timerInterval;
+
+        // Инициализация теста
+        document.addEventListener('DOMContentLoaded', function() {
+            generateQuestions();
+            updateQuestionDisplay();
+            updateStats();
+            startTimer();
+            
+            // Добавляем обработчики клавиш
+            document.addEventListener('keydown', handleKeyPress);
+        });
+
+        // Генерация вопросов
+        function generateQuestions() {
+            const container = document.getElementById('questions-container');
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                questionDiv.style.display = index === 0 ? 'block' : 'none';
+                
+                questionDiv.innerHTML = `
+                    <div class="question-number">Вопрос ${index + 1} из ${questions.length}</div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-grid">
+                        ${q.options.map((option, optIndex) => `
+                            <label class="option-label" for="q${index}-opt${optIndex}">
+                                <input type="radio" 
+                                       name="q${index}" 
+                                       id="q${index}-opt${optIndex}" 
+                                       value="${optIndex}"
+                                       class="option-radio"
+                                       onchange="selectAnswer(${index}, ${optIndex})">
+                                <div class="option-text">
+                                    <span class="option-number">${String.fromCharCode(65 + optIndex)}</span>
+                                    ${option}
+                                </div>
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Выбор ответа
+        function selectAnswer(questionIndex, optionIndex) {
+            if (testCompleted) return;
+            
+            userAnswers[questionIndex] = optionIndex;
+            
+            // Обновляем стиль выбранного варианта
+            const questionDiv = document.getElementById(`question-${questionIndex}`);
+            const labels = questionDiv.querySelectorAll('.option-label');
+            labels.forEach(label => label.classList.remove('selected'));
+            
+            const selectedLabel = questionDiv.querySelector(`label[for="q${questionIndex}-opt${optionIndex}"]`);
+            selectedLabel.classList.add('selected');
+            
+            updateStats();
+        }
+
+        // Следующий вопрос
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                document.getElementById(`question-${currentQuestion}`).style.display = 'none';
+                currentQuestion++;
+                document.getElementById(`question-${currentQuestion}`).style.display = 'block';
+                updateQuestionDisplay();
+            }
+        }
+
+        // Предыдущий вопрос
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                document.getElementById(`question-${currentQuestion}`).style.display = 'none';
+                currentQuestion--;
+                document.getElementById(`question-${currentQuestion}`).style.display = 'block';
+                updateQuestionDisplay();
+            }
+        }
+
+        // Обновление отображения текущего вопроса
+        function updateQuestionDisplay() {
+            document.getElementById('current-question').textContent = currentQuestion + 1;
+            
+            // Обновляем состояние кнопок навигации
+            document.getElementById('prev-btn').style.display = currentQuestion === 0 ? 'none' : 'inline-block';
+            document.getElementById('next-btn').style.display = currentQuestion === questions.length - 1 ? 'none' : 'inline-block';
+            
+            // Восстанавливаем выбранный ответ, если он есть
+            if (userAnswers[currentQuestion] !== null) {
+                const radio = document.querySelector(`#q${currentQuestion}-opt${userAnswers[currentQuestion]}`);
+                if (radio) {
+                    radio.checked = true;
+                    const label = document.querySelector(`label[for="q${currentQuestion}-opt${userAnswers[currentQuestion]}"]`);
+                    if (label) {
+                        const labels = document.querySelectorAll(`#question-${currentQuestion} .option-label`);
+                        labels.forEach(l => l.classList.remove('selected'));
+                        label.classList.add('selected');
+                    }
+                }
+            }
+        }
+
+        // Обновление статистики
+        function updateStats() {
+            const answered = userAnswers.filter(answer => answer !== null).length;
+            document.getElementById('answered-count').textContent = answered;
+            
+            // Обновляем прогресс в заголовке
+            const progressPercentage = Math.round((answered / questions.length) * 100);
+            
+            // Обновляем кнопку проверки
+            const checkBtn = document.getElementById('check-btn');
+            if (answered === questions.length) {
+                checkBtn.disabled = false;
+                checkBtn.innerHTML = '<i class="fas fa-check-circle"></i> Проверить тест';
+            } else {
+                checkBtn.disabled = true;
+                checkBtn.innerHTML = `<i class="fas fa-lock"></i> Ответьте на все вопросы (${answered}/${questions.length})`;
+            }
+        }
+
+        // Таймер
+        function startTimer() {
+            const timerElement = document.getElementById('timer').querySelector('span');
+            let timeLeft = 30 * 60; // 30 минут в секундах
+            
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0 || testCompleted) {
+                    clearInterval(timerInterval);
+                    if (!testCompleted) {
+                        checkTest();
+                    }
+                    return;
+                }
+                
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Меняем цвет при малом времени
+                if (timeLeft < 300) { // 5 минут
+                    timerElement.style.color = '#e74c3c';
+                }
+            }, 1000);
+        }
+
+        // Проверка теста
+        function checkTest() {
+            // Проверяем, что все вопросы отвечены
+            const unanswered = userAnswers.filter(answer => answer === null);
+            if (unanswered.length > 0) {
+                alert(`Пожалуйста, ответьте на все вопросы. Осталось: ${unanswered.length}`);
+                return;
+            }
+            
+            testCompleted = true;
+            clearInterval(timerInterval);
+            
+            // Рассчитываем результаты
+            let correctCount = 0;
+            
+            questions.forEach((q, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === q.correct;
+                
+                if (isCorrect) {
+                    correctCount++;
+                }
+                
+                // Подсвечиваем правильные и неправильные ответы
+                const questionDiv = document.getElementById(`question-${index}`);
+                const labels = questionDiv.querySelectorAll('.option-label');
+                
+                labels.forEach((label, optIndex) => {
+                    if (optIndex === q.correct) {
+                        label.classList.add('correct');
+                    } else if (optIndex === userAnswer && !isCorrect) {
+                        label.classList.add('incorrect');
+                    }
+                });
+            });
+            
+            // Показываем результаты
+            showResults(correctCount);
+        }
+
+        // Показать результаты
+        function showResults(correctCount) {
+            const totalQuestions = questions.length;
+            const percentage = Math.round((correctCount / totalQuestions) * 100);
+            
+            // Обновляем элементы результатов
+            document.getElementById('final-score').textContent = `${correctCount}/${totalQuestions}`;
+            document.getElementById('correct-count').textContent = correctCount;
+            document.getElementById('incorrect-count').textContent = totalQuestions - correctCount;
+            document.getElementById('percentage').textContent = `${percentage}%`;
+            
+            // Время прохождения
+            const endTime = new Date();
+            const timeTaken = Math.floor((endTime - startTime) / 1000);
+            const minutes = Math.floor(timeTaken / 60);
+            const seconds = timeTaken % 60;
+            document.getElementById('time-taken').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Сообщение в зависимости от результата
+            let message = '';
+            if (percentage >= 90) {
+                message = 'Отличный результат! Вы прекрасно освоили материал курса.';
+            } else if (percentage >= 70) {
+                message = 'Хороший результат! Вы хорошо разбираетесь в основах 1С.';
+            } else if (percentage >= 50) {
+                message = 'Удовлетворительный результат. Рекомендуем повторить материал.';
+            } else {
+                message = 'Вам стоит более внимательно изучить материал курса.';
+            }
+            document.getElementById('result-message').textContent = message;
+            
+            // Анимация прогресс-бара
+            const circle = document.getElementById('progress-circle');
+            const radius = 90;
+            const circumference = 2 * Math.PI * radius;
+            const offset = circumference - (percentage / 100) * circumference;
+            
+            setTimeout(() => {
+                circle.style.strokeDashoffset = offset;
+                document.getElementById('progress-text').textContent = `${percentage}%`;
+            }, 100);
+            
+            // Показываем результаты
+            document.getElementById('result-container').style.display = 'block';
+            
+            // Прячем вопросы
+            document.getElementById('questions-container').style.display = 'none';
+            
+            // Прячем кнопки управления
+            document.querySelector('.test-controls').style.display = 'none';
+            
+            // Прокручиваем к результатам
+            document.getElementById('result-container').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Начать тест заново
+        function restartTest() {
+            // Сброс переменных
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            testCompleted = false;
+            startTime = new Date();
+            
+            // Сброс интерфейса
+            document.querySelectorAll('.question-container').forEach((div, index) => {
+                div.style.display = index === 0 ? 'block' : 'none';
+                
+                // Сбрасываем стили ответов
+                const labels = div.querySelectorAll('.option-label');
+                labels.forEach(label => {
+                    label.classList.remove('selected', 'correct', 'incorrect');
+                });
+                
+                // Сбрасываем радио-кнопки
+                const radios = div.querySelectorAll('input[type="radio"]');
+                radios.forEach(radio => {
+                    radio.checked = false;
+                });
+            });
+            
+            // Показываем вопросы и скрываем результаты
+            document.getElementById('questions-container').style.display = 'block';
+            document.getElementById('result-container').style.display = 'none';
+            document.querySelector('.test-controls').style.display = 'flex';
+            
+            // Сброс статистики
+            updateQuestionDisplay();
+            updateStats();
+            
+            // Сброс таймера
+            clearInterval(timerInterval);
+            document.getElementById('timer').querySelector('span').textContent = '30:00';
+            document.getElementById('timer').querySelector('span').style.color = '';
+            startTimer();
+        }
+
+        // Обработка нажатий клавиш
+        function handleKeyPress(event) {
+            if (testCompleted) return;
+            
+            switch(event.key) {
+                case 'ArrowLeft':
+                    event.preventDefault();
+                    prevQuestion();
+                    break;
+                case 'ArrowRight':
+                    event.preventDefault();
+                    nextQuestion();
+                    break;
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                    event.preventDefault();
+                    const optionIndex = parseInt(event.key) - 1;
+                    if (optionIndex >= 0 && optionIndex <= 3) {
+                        selectAnswer(currentQuestion, optionIndex);
+                    }
+                    break;
+                case 'a':
+                case 'A':
+                    event.preventDefault();
+                    selectAnswer(currentQuestion, 0);
+                    break;
+                case 'b':
+                case 'B':
+                    event.preventDefault();
+                    selectAnswer(currentQuestion, 1);
+                    break;
+                case 'c':
+                case 'C':
+                    event.preventDefault();
+                    selectAnswer(currentQuestion, 2);
+                    break;
+                case 'd':
+                case 'D':
+                    event.preventDefault();
+                    selectAnswer(currentQuestion, 3);
+                    break;
+            }
+        }
+
+        // Экспорт результатов
+        function exportResults() {
+            const results = {
+                correct: userAnswers.filter((answer, index) => answer === questions[index].correct).length,
+                total: questions.length,
+                answers: userAnswers,
+                timestamp: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(results, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            const exportFileDefaultName = 'test-results.json';
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+    </script>
+</body>
+</html>
