@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Раздел 3: Структура конфигурации - Учебный курс</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .code-example {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .code-keyword {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        .code-string {
+            color: #2ecc71;
+        }
+        
+        .code-comment {
+            color: #95a5a6;
+            font-style: italic;
+        }
+        
+        .code-number {
+            color: #e74c3c;
+        }
+        
+        .exercise-list {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 4px solid #9b59b6;
+        }
+        
+        .exercise-list h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .exercise-list ol {
+            padding-left: 20px;
+        }
+        
+        .exercise-list li {
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+        
+        .info-box {
+            background: #e8f4fc;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .architecture-diagram {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .architecture-diagram h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .levels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .level {
+            flex: 1;
+            padding: 15px;
+            margin: 0 5px;
+            background: #f5f7fa;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .level h5 {
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        
+        .connections {
+            position: relative;
+            height: 40px;
+            margin: 10px 0;
+        }
+        
+        .connection-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #3498db;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .connection-arrow {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid #3498db;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+        }
+        
+        .object-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .object-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            border-left: 4px solid #2ecc71;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .object-card h5 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .object-card p {
+            color: #7f8c8d;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <h1><i class="fas fa-project-diagram"></i> Раздел 3: Структура конфигурации и проведение документов</h1>
+            <p>Архитектура конфигураций, объекты метаданных, механизмы проведения</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="../index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Назад к разделам
+        </a>
+
+        <div class="lecture-container">
+            <h1 class="lecture-title">Структура конфигурации и проведение документов</h1>
+            
+            <div class="lecture-content">
+                <h3>1. Архитектура конфигурации 1С</h3>
+                <p>Конфигурация в 1С представляет собой иерархическую структуру объектов метаданных, которые определяют логику, данные и интерфейс прикладного решения. Понимание этой структуры критически важно для эффективной разработки.</p>
+                
+                <div class="architecture-diagram">
+                    <h4>Уровни конфигурации</h4>
+                    <div class="levels">
+                        <div class="level">
+                            <h5><i class="fas fa-database"></i> Уровень данных</h5>
+                            <p>Справочники, Документы, Регистры</p>
+                        </div>
+                        <div class="levels">
+                        <div class="connection-line"></div>
+                        <div class="connection-arrow"></div>
+                        </div>
+                        <div class="level">
+                            <h5><i class="fas fa-code"></i> Уровень логики</h5>
+                            <p>Модули объектов, Общие модули, Обработки</p>
+                        </div>
+                        <div class="levels">
+                        <div class="connection-line"></div>
+                        <div class="connection-arrow"></div>
+                        </div>
+                        <div class="level">
+                            <h5><i class="fas fa-desktop"></i> Уровень интерфейса</h5>
+                            <p>Формы, Отчеты, Панели навигации</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>2. Основные объекты конфигурации</h3>
+                
+                <div class="object-types">
+                    <div class="object-card">
+                        <h5>Справочники</h5>
+                        <p>Списки однотипных элементов (контрагенты, номенклатура, сотрудники)</p>
+                    </div>
+                    
+                    <div class="object-card">
+                        <h5>Документы</h5>
+                        <p>Объекты для фиксации хозяйственных операций с механизмом проведения</p>
+                    </div>
+                    
+                    <div class="object-card">
+                        <h5>Регистры</h5>
+                        <p>Хранение периодических данных: остатки, обороты, сведения</p>
+                    </div>
+                    
+                    <div class="object-card">
+                        <h5>Отчеты</h5>
+                        <p>Средства анализа и вывода данных в структурированном виде</p>
+                    </div>
+                    
+                    <div class="object-card">
+                        <h5>Обработки</h5>
+                        <p>Вспомогательные программы для выполнения специфических операций</p>
+                    </div>
+                    
+                    <div class="object-card">
+                        <h5>Планы видов характеристик</h5>
+                        <p>Хранение дополнительных свойств объектов в разрезе видов характеристик</p>
+                    </div>
+                </div>
+                
+                <h3>3. Механизм проведения документов</h3>
+                <p>Проведение документа — это ключевой механизм, обеспечивающий двойную запись в учетных системах. При проведении документ формирует движения по регистрам, которые обновляют остатки и позволяют строить актуальные отчеты.</p>
+                
+                <div class="info-box">
+                    <p><strong>Принцип проведения:</strong> Каждый документ может быть проведен (отражен в учете) или не проведен (черновик). Отмена проведения (сторнирование) возвращает систему к состоянию до операции.</p>
+                </div>
+                
+                <h3>4. Модули объектов и менеджеров</h3>
+                <p>Каждый объект конфигурации имеет связанные модули:</p>
+                <ul>
+                    <li><strong>Модуль объекта:</strong> Содержит логику, специфичную для конкретного экземпляра объекта (например, обработка событий формы)</li>
+                    <li><strong>Модуль менеджера:</strong> Содержит общие методы для работы с объектами данного типа (создание, поиск, выборка)</li>
+                </ul>
+                
+                <h3>5. Подсистемы и навигация</h3>
+                <p>Подсистемы используются для логической группировки объектов конфигурации и построения навигации в интерфейсе. Они позволяют организовать сложную конфигурацию в понятную для пользователя структуру.</p>
+                
+                <!-- Контрольные вопросы -->
+                <div class="questions-section">
+                    <h2 class="questions-title">Контрольные вопросы</h2>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 1: Из каких основных объектов состоит типичная конфигурация 1С?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Типичная конфигурация состоит из справочников (хранение данных), документов (фиксация операций), регистров (хранение периодических данных), отчетов (анализ данных), обработок (вспомогательные операции) и подсистем для организации навигации.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 2: Как связаны между собой документы и регистры накопления?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Документы являются регистраторами для регистров накопления — при проведении документа он формирует движения по регистрам, которые изменяют остатки; эта связь обеспечивает актуальность учетных данных и возможность построения отчетов.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 3: Что такое модуль объекта и модуль менеджера?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Модуль объекта содержит логику работы с конкретным экземпляром объекта, а модуль менеджера предоставляет общие методы для работы со всеми объектами данного типа, такие как создание, поиск и массовые операции.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 4: Как организовать проведение документа с формированием движений?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Проведение организуется через процедуру обработки проведения в модуле документа, где формируются движения по регистрам; при отмене проведения движения удаляются, что возвращает систему в предыдущее состояние.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 5: Что такое подсистемы и для чего они используются?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Подсистемы — это логические группы объектов конфигурации, используемые для организации интерфейса пользователя; они позволяют структурировать функционал, создавать панели навигации и управлять видимостью объектов для разных ролей.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Упражнения для самостоятельной работы -->
+                <div class="exercise-list">
+                    <h3><i class="fas fa-tasks"></i> Упражнения для самостоятельной работы:</h3>
+                    <ol>
+                        <li>Создайте простую конфигурацию "Торговля"</li>
+                        <li>Реализуйте проведение документа "ПриходнаяНакладная"</li>
+                        <li>Настройте формы списков и элементов для справочников</li>
+                    </ol>
+                    
+                    <h4 style="margin-top: 25px; color: #2c3e50;">Пример выполнения (упражнение 2):</h4>
+                    <div class="code-example">
+                        <span class="code-comment">// Модуль документа "ПриходнаяНакладная"</span><br>
+                        <br>
+                        <span class="code-comment">// Процедура проведения документа</span><br>
+                        <span class="code-keyword">Процедура</span> ОбработкаПроведения(Отказ, Режим)<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Очищаем предыдущие движения</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Движения.ОприходованиеТоваров.Записать();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Движения.ОприходованиеТоваров.Очистить();<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Обходим все строки табличной части</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">Для Каждого</span> СтрокаТовары <span class="code-keyword">Из</span> Товары <span class="code-keyword">Цикл</span><br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    <span class="code-comment">// Формируем движение по регистру накопления "ОстаткиТоваров"</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    Движение = Движения.ОприходованиеТоваров.Добавить();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    Движение.Период = Дата;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    Движение.Номенклатура = СтрокаТовары.Номенклатура;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    Движение.Склад = Склад;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    Движение.Количество = СтрокаТовары.Количество;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    Движение.Сумма = СтрокаТовары.Сумма;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">КонецЦикла</span>;<br>
+                        <br>
+                        <span class="code-keyword">КонецПроцедуры</span><br>
+                        <br>
+                        <span class="code-comment">// Процедура отмены проведения</span><br>
+                        <span class="code-keyword">Процедура</span> ОбработкаОтменыПроведения(Отказ, Режим)<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Удаляем движения при отмене проведения</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Движения.ОприходованиеТоваров.Записать();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Движения.ОприходованиеТоваров.Очистить();<br>
+                        <br>
+                        <span class="code-keyword">КонецПроцедуры</span><br>
+                        <br>
+                        <span class="code-comment">// Функция заполнения цены и суммы по номенклатуре</span><br>
+                        <span class="code-keyword">Функция</span> ЗаполнитьЦены()<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">Для Каждого</span> СтрокаТовары <span class="code-keyword">Из</span> Товары <span class="code-keyword">Цикл</span><br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    Цена = УтилитыРаботыСДанными.ПолучитьЦенуНоменклатуры(<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;        СтрокаТовары.Номенклатура, <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;        Дата<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    );<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    СтрокаТовары.Цена = Цена;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    СтрокаТовары.Сумма = Цена * СтрокаТовары.Количество;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">КонецЦикла</span>;<br>
+                        <br>
+                        <span class="code-keyword">КонецФункции</span>
+                    </div>
+                    
+                    <div class="info-box">
+                        <p><strong>Подсказка для упражнения 1:</strong> Создайте базовые объекты: справочники "Номенклатура", "Контрагенты", "Склады"; документы "ПриходнаяНакладная", "РасходнаяНакладная"; регистр накопления "ОстаткиТоваров".</p>
+                        <p><strong>Подсказка для упражнения 3:</strong> Настройте формы списка с отображением ключевых колонок, добавьте быстрый поиск и сортировку; для формы элемента организуйте удобное расположение реквизитов с группировкой по смыслу.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="section2.html" class="btn">
+                    <i class="fas fa-arrow-left"></i> Предыдущий раздел
+                </a>
+                <a href="../index.html" class="btn">
+                    <i class="fas fa-home"></i> К списку разделов
+                </a>
+                <a href="section4.html" class="btn">
+                    Следующий раздел <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 Учебный курс. Раздел 3: Структура конфигурации</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
