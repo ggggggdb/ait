@@ -6,6 +6,66 @@
     <title>Раздел 1: Введение - Учебный курс</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .code-example {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .code-keyword {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        .code-string {
+            color: #2ecc71;
+        }
+        
+        .code-comment {
+            color: #95a5a6;
+            font-style: italic;
+        }
+        
+        .code-number {
+            color: #e74c3c;
+        }
+        
+        .exercise-list {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 4px solid #9b59b6;
+        }
+        
+        .exercise-list h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .exercise-list ol {
+            padding-left: 20px;
+        }
+        
+        .exercise-list li {
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+        
+        .info-box {
+            background: #e8f4fc;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
 </head>
 <body>
     <header class="main-header">
@@ -28,16 +88,73 @@
                 <p>1С — это платформа для автоматизации бизнеса и система для разработки прикладных решений, созданная фирмой «1С». Разработана в 1990-х годах и продолжает активно развиваться по сей день.</p>                    
                 <p>Платформа сочетает в себе мощный встроенный язык программирования и богатую функциональность для учета, управления и анализа данных, что делает её основным стандартом для автоматизации бизнеса в странах СНГ.</p>
                 <p>К ключевым характеристикам 1C относятся:
-            	Собственный объектно-ориентированный язык программирования, близкий по синтаксису к русскому и английскому.
-            	Интерпретируемый характер выполнения кода (хотя есть и компиляция в байт-код).
-            	Глубокая интеграция с бухгалтерским, управленческим и оперативным учетом.
-            	Модель данных на основе «конфигураций» — готовых или кастомизированных бизнес-приложений.
-            	Многопользовательский режим работы с различными СУБД (SQL, собственный файловый вариант).
-            	Кроссплатформенность (работает на Windows, Linux, macOS).
-            	Масштабируемость от малого бизнеса до крупных корпораций и распределенных систем.</p>
+                Собственный объектно-ориентированный язык программирования, близкий по синтаксису к русскому и английскому.
+                Интерпретируемый характер выполнения кода (хотя есть и компиляция в байт-код).
+                Глубокая интеграция с бухгалтерским, управленческим и оперативным учетом.
+                Модель данных на основе «конфигураций» — готовых или кастомизированных бизнес-приложений.
+                Многопользовательский режим работы с различными СУБД (SQL, собственный файловый вариант).
+                Кроссплатформенность (работает на Windows, Linux, macOS).
+                Масштабируемость от малого бизнеса до крупных корпораций и распределенных систем.</p>
                 
                 <div class="info-box">
                     <p><strong>Ключевой момент:</strong> Понимание базовых принципов позволяет эффективно осваивать более сложные концепции.</p>
+                </div>
+                
+                <!-- Добавленная секция с упражнениями -->
+                <div class="exercise-list">
+                    <h3><i class="fas fa-tasks"></i> Упражнения для самостоятельной работы:</h3>
+                    <ol>
+                        <li>Создайте обработку, которая демонстрирует работу с базовыми типами данных</li>
+                        <li>Напишите функцию для расчета НДС с различными ставками</li>
+                        <li>Создайте обработку для работы с массивами и структурами</li>
+                    </ol>
+                    
+                    <h4 style="margin-top: 25px; color: #2c3e50;">Пример выполнения (упражнение 1):</h4>
+                    <div class="code-example">
+                        <span class="code-comment">// Обработка "Демонстрация типов данных"</span><br>
+                        <span class="code-keyword">Процедура</span> ПоказатьТипыДанных()<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Числовые типы</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Цена = <span class="code-number">1500.50</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Количество = <span class="code-number">3</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Сумма = Цена * Количество;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Строковые типы</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Наименование = <span class="code-string">"Монитор 24\""</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Описание = <span class="code-string">"Игровой монитор с высоким разрешением"</span>;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Дата и время</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ДатаЗаказа = ТекущаяДата();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ДатаДоставки = ДатаЗаказа + <span class="code-number">86400</span> * <span class="code-number">3</span>; <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Булевы значения</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ЕстьВНаличии = <span class="code-keyword">Истина</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Оплачен = <span class="code-keyword">Ложь</span>;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Массив</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Товары = <span class="code-keyword">Новый Массив</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Товары.Добавить(<span class="code-string">"Мышь"</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Товары.Добавить(<span class="code-string">"Клавиатура"</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Товары.Добавить(<span class="code-string">"Наушники"</span>);<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Структура</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ДанныеКлиента = <span class="code-keyword">Новый Структура</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ДанныеКлиента.Вставить(<span class="code-string">"ФИО"</span>, <span class="code-string">"Иванов Иван Иванович"</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ДанныеКлиента.Вставить(<span class="code-string">"Телефон"</span>, <span class="code-string">"+7-999-123-45-67"</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;ДанныеКлиента.Вставить(<span class="code-string">"Email"</span>, <span class="code-string">"ivanov@mail.ru"</span>);<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Вывод информации</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Сообщение = <span class="code-string">"Демонстрация типов данных:|-----------------------------|Числа: Цена = "</span> + Цена + <span class="code-string">", Количество = "</span> + Количество + <span class="code-string">"|Сумма: "</span> + Сумма + <span class="code-string">"|Строки: "</span> + Наименование + <span class="code-string">"|Даты: Заказ - "</span> + ДатаЗаказа + <span class="code-string">", Доставка - "</span> + ДатаДоставки + <span class="code-string">"|Массив: "</span> + Товары.Количество() + <span class="code-string">" элементов|Структура: "</span> + ДанныеКлиента.Количество() + <span class="code-string">" полей"</span>;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">Сообщить</span>(Сообщение);<br>
+                        <br>
+                        <span class="code-keyword">КонецПроцедуры</span>
+                    </div>
+                    
+                    <div class="info-box">
+                        <p><strong>Подсказка для упражнения 2:</strong> Используйте функцию с параметрами (Сумма, СтавкаНДС), где СтавкаНДС может быть 0%, 10% или 20% в зависимости от типа товара.</p>
+                        <p><strong>Подсказка для упражнения 3:</strong> Создайте обработку, которая формирует отчет по массиву заказов, где каждый заказ представлен структурой с полями: Номер, Дата, Сумма, Статус.</p>
+                    </div>
                 </div>
             </div>
 
@@ -94,7 +211,7 @@
             </div>
 
             <div class="nav-buttons">
-                <a href="../index.html" class="btn">
+                <a href="index.html" class="btn">
                     <i class="fas fa-home"></i> К списку разделов
                 </a>
                 <a href="section2.html" class="btn">
