@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Раздел 6: Хранилище конфигурации - Учебный курс</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .code-example {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .code-keyword {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        .code-string {
+            color: #2ecc71;
+        }
+        
+        .code-comment {
+            color: #95a5a6;
+            font-style: italic;
+        }
+        
+        .code-number {
+            color: #e74c3c;
+        }
+        
+        .exercise-list {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 4px solid #9b59b6;
+        }
+        
+        .exercise-list h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .exercise-list ol {
+            padding-left: 20px;
+        }
+        
+        .exercise-list li {
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+        
+        .info-box {
+            background: #e8f4fc;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .warning-box {
+            background: #fff8e1;
+            border-left: 4px solid #ffb300;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .workflow-diagram {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .workflow-diagram h4 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .workflow-step {
+            flex: 1;
+            text-align: center;
+            padding: 0 15px;
+            position: relative;
+        }
+        
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.5rem;
+        }
+        
+        .step-connector {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: #3498db;
+            z-index: -1;
+        }
+        
+        .step-content {
+            background: #f5f7fa;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 120px;
+        }
+        
+        .step-content h5 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border-top: 4px solid #2ecc71;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .feature-card h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table th {
+            background: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .conflict-resolution {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .conflict-resolution h4 {
+            color: #c62828;
+            margin-bottom: 10px;
+        }
+        
+        .best-practice-list {
+            background: #f1f8e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #689f38;
+        }
+        
+        .best-practice-list ul {
+            margin-left: 20px;
+        }
+        
+        .best-practice-list li {
+            margin-bottom: 8px;
+        }
+        
+        .configurator-steps {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .configurator-steps h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .configurator-step {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .configurator-step h5 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .configurator-step p {
+            color: #34495e;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <h1><i class="fas fa-database"></i> Раздел 6: Работа с хранилищем конфигурации</h1>
+            <p>Коллективная разработка, управление версиями и развертывание</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="../index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Назад к разделам
+        </a>
+
+        <div class="lecture-container">
+            <h1 class="lecture-title">Хранилище конфигурации 1С</h1>
+            
+            <div class="lecture-content">
+                <h3>1. Что такое хранилище конфигурации?</h3>
+                <p>Хранилище конфигурации — это централизованная база данных для хранения версий конфигурации и организации коллективной разработки. Оно позволяет нескольким разработчикам работать над одним проектом одновременно, контролируя изменения и предотвращая конфликты.</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h4><i class="fas fa-users"></i> Коллективная разработка</h4>
+                        <p>Одновременная работа нескольких разработчиков над одной конфигурацией с контролем изменений</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4><i class="fas fa-history"></i> История изменений</h4>
+                        <p>Полное отслеживание всех изменений конфигурации с возможностью отката к любой версии</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4><i class="fas fa-code-branch"></i> Ветвление и слияние</h4>
+                        <p>Создание веток разработки для новых функций с последующим слиянием в основную ветку</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4><i class="fas fa-user-lock"></i> Контроль доступа</h4>
+                        <p>Разграничение прав разработчиков на чтение и изменение различных объектов конфигурации</p>
+                    </div>
+                </div>
+                
+                <h3>2. Архитектура и рабочий процесс</h3>
+                
+                <div class="workflow-diagram">
+                    <h4>Рабочий процесс с хранилищем</h4>
+                    <div class="workflow-steps">
+                        <div class="workflow-step">
+                            <div class="step-icon">
+                                <i class="fas fa-download"></i>
+                            </div>
+                            <div class="step-connector"></div>
+                            <div class="step-content">
+                                <h5>Загрузка последней версии</h5>
+                                <p>Получение актуальной конфигурации из хранилища перед началом работы</p>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-icon">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                            <div class="step-connector"></div>
+                            <div class="step-content">
+                                <h5>Работа с изменениями</h5>
+                                <p>Редактирование конфигурации в режиме блокировки объектов</p>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-icon">
+                                <i class="fas fa-upload"></i>
+                            </div>
+                            <div class="step-connector"></div>
+                            <div class="step-content">
+                                <h5>Выгрузка изменений</h5>
+                                <p>Сохранение изменений в хранилище с комментариями и освобождение объектов</p>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-icon">
+                                <i class="fas fa-code-merge"></i>
+                            </div>
+                            <div class="step-content">
+                                <h5>Слияние изменений</h5>
+                                <p>Автоматическое или ручное слияние изменений разных разработчиков</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>3. Основные операции с хранилищем</h3>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Операция</th>
+                            <th>Назначение</th>
+                            <th>Типичный сценарий</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Подключение к хранилищу</strong></td>
+                            <td>Установка связи с хранилищем для работы</td>
+                            <td>Начало работы разработчика, получение прав доступа</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Загрузка конфигурации</strong></td>
+                            <td>Получение последней версии конфигурации из хранилища</td>
+                            <td>Обновление локальной копии перед внесением изменений</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Получение изменений</strong></td>
+                            <td>Захват объектов для редактирования</td>
+                            <td>Блокировка объектов перед началом их модификации</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Выгрузка изменений</strong></td>
+                            <td>Сохранение измененных объектов в хранилище</td>
+                            <td>Завершение работы над задачей, освобождение объектов</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Создание версии</strong></td>
+                            <td>Фиксация состояния конфигурации в определенный момент</td>
+                            <td>Завершение этапа разработки, подготовка к выпуску</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>4. Разрешение конфликтов</h3>
+                
+                <div class="conflict-resolution">
+                    <h4>Типичные конфликты и их решение</h4>
+                    <p>Конфликты возникают, когда несколько разработчиков одновременно изменяют один и тот же объект конфигурации. Хранилище предлагает различные стратегии разрешения конфликтов:</p>
+                    <ul>
+                        <li><strong>Автоматическое слияние:</strong> Для изменений в разных частях объекта</li>
+                        <li><strong>Ручное слияние:</strong> При одновременном изменении одного свойства</li>
+                        <li><strong>Выбор версии:</strong> Принятие изменений одного разработчика с отклонением других</li>
+                        <li><strong>Объединение изменений:</strong> Интеграция полезных изменений из всех версий</li>
+                    </ul>
+                </div>
+                
+                <div class="warning-box">
+                    <p><strong>Важно:</strong> Регулярно обновляйте конфигурацию из хранилища перед началом работы и своевременно выгружайте изменения после завершения задачи. Это минимизирует риск конфликтов.</p>
+                </div>
+                
+                <h3>5. Лучшие практики работы с хранилищем</h3>
+                
+                <div class="best-practice-list">
+                    <ul>
+                        <li>Всегда делайте закладку на задачу перед началом работы с объектами</li>
+                        <li>Пишите подробные комментарии при выгрузке изменений</li>
+                        <li>Не держите объекты захваченными дольше необходимого</li>
+                        <li>Регулярно создавайте версии конфигурации по завершении этапов</li>
+                        <li>Используйте ветвление для разработки крупных функциональностей</li>
+                        <li>Перед выпуском в production создавайте релизную версию</li>
+                    </ul>
+                </div>
+                
+                <div class="success-box">
+                    <p><strong>Рекомендация:</strong> Настройте автоматическое создание версий при каждом успешном прохождении тестов и используйте систему непрерывной интеграции для контроля качества.</p>
+                </div>
+                
+                <!-- Контрольные вопросы -->
+                <div class="questions-section">
+                    <h2 class="questions-title">Контрольные вопросы</h2>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 1: Что такое хранилище конфигурации и для чего оно предназначено?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Хранилище конфигурации — это централизованная система управления версиями для конфигураций 1С, предназначенная для организации коллективной разработки, контроля изменений, хранения истории модификаций и предотвращения конфликтов при одновременной работе нескольких программистов.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 2: Какие основные операции поддерживаются при работе с хранилищем?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Основные операции включают подключение к хранилищу, загрузку последней версии конфигурации, захват объектов для редактирования, выгрузку изменений, создание версий, сравнение версий, разрешение конфликтов и управление правами доступа разработчиков.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 3: Как организовать совместную разработку с использованием хранилища?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Совместная разработка организуется через выделение объектов разработчикам с системой блокировок: разработчик захватывает объекты для редактирования, вносит изменения, а затем выгружает их обратно в хранилище, освобождая объекты для других.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 4: Что такое версия конфигурации и как происходит управление версиями?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Версия конфигурации — это фиксированное состояние всех объектов конфигурации в определенный момент времени; управление версиями включает создание версий по завершении этапов разработки, их маркировку, хранение истории и возможность отката к любой предыдущей версии.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 5: Как разрешать конфликты при совместной разработке?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Конфликты разрешаются через механизм сравнения версий и слияния изменений: система предлагает варианты автоматического слияния, ручного объединения изменений или выбора одной из версий; для сложных конфликтов требуется вмешательство ведущего разработчика.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 6: Какие настройки безопасности применяются к хранилищу конфигурации?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Настройки безопасности включают аутентификацию пользователей, разграничение прав доступа к объектам конфигурации, контроль операций (чтение, изменение, удаление), ведение журнала действий и настройку политик паролей для доступа к хранилищу.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Упражнения для самостоятельной работы -->
+                <div class="exercise-list">
+                    <h3><i class="fas fa-tasks"></i> Упражнения для самостоятельной работы:</h3>
+                    <ol>
+                        <li>Настройте хранилище конфигурации для существующей базы</li>
+                        <li>Отработайте процесс загрузки и выгрузки изменений</li>
+                        <li>Создайте и примените версию конфигурации</li>
+                    </ol>
+                    
+                    <h4 style="margin-top: 25px; color: #2c3e50;">Инструкция по выполнению (упражнение 1):</h4>
+                    
+                    <div class="configurator-steps">
+                        <h4><i class="fas fa-cogs"></i> Настройка хранилища в конфигураторе</h4>
+                        
+                        <div class="configurator-step">
+                            <h5>Шаг 1: Откройте конфигуратор</h5>
+                            <p>Запустите конфигуратор вашей базы данных с правами администратора</p>
+                        </div>
+                        
+                        <div class="configurator-step">
+                            <h5>Шаг 2: Создание хранилища</h5>
+                            <p>В меню выберите: <strong>Хранилище конфигурации → Создать хранилище...</strong></p>
+                            <p>Укажите путь к папке, где будет размещено хранилище (рекомендуется использовать отдельный диск или сетевую папку)</p>
+                        </div>
+                        
+                        <div class="configurator-step">
+                            <h5>Шаг 3: Настройка параметров</h5>
+                            <p>Задайте настройки безопасности:</p>
+                            <p>- Создайте пользователя-администратора хранилища</p>
+                            <p>- Установите сложный пароль</p>
+                            <p>- Настройте политику блокировок (рекомендуется "Автоматическая блокировка изменяемых объектов")</p>
+                        </div>
+                        
+                        <div class="configurator-step">
+                            <h5>Шаг 4: Начальная выгрузка</h5>
+                            <p>После создания хранилища выполните начальную выгрузку конфигурации:</p>
+                            <p>Выберите: <strong>Хранилище конфигурации → Выгрузить конфигурацию в хранилище</strong></p>
+                            <p>Введите комментарий (например, "Начальная версия") и подтвердите выгрузку</p>
+                        </div>
+                        
+                        <div class="configurator-step">
+                            <h5>Шаг 5: Настройка прав доступа</h5>
+                            <p>Добавьте пользователей для коллективной разработки:</p>
+                            <p>Перейдите в <strong>Хранилище конфигурации → Пользователи хранилища</strong></p>
+                            <p>Добавьте новых пользователей и назначьте им права (разработчик, читатель, администратор)</p>
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin-top: 25px; color: #2c3e50;">Инструкция по выполнению (упражнение 2):</h4>
+                    
+                    <div class="configurator-steps">
+                        <h4><i class="fas fa-sync-alt"></i> Процесс работы с изменениями</h4>
+                        
+                        <div class="configurator-step">
+                            <h5>Шаг 1: Подключение к хранилищу</h5>
+                            <p>Откройте конфигуратор базы и выберите: <strong>Хранилище конфигурации → Подключиться к хранилищу...</strong></p>
+                            <p>Укажите путь к хранилищу и введите свои учетные данные</p>
+                        </div>
+                        
+                        <div class="configurator-step">
+                            <h5>Шаг 2: Загрузка последней версии</h5>
+                            <p>Перед началом работы загрузите актуальную конфигурацию:</p>
+                            <p>Выберите: <strong>Хранилище конфигурации → Загрузить конфигурацию из хранилища</strong></p>
+                            <p>Подтвердите замену текущей конфигурации</p>
+                        </div>
+                        
+                        <div class="configurator-step">
+                            <h5>Шаг 3: Получение объектов для редактирования</h5>
+                            <p>Откройте список объектов конфигурации (F2)</p>
+                            <p>Выделите нужные объекты и выберите: <strong>Хранилище конфигурации → Получить для изменения</strong></p>
+                            <p>Объекты будут заблокированы для других разработчиков</p>
+                        </div>
+                        
+                        <div class="configurator-step">
+                            <h5>Шаг 4: Внесение изменений</h5>
+                            <p>Отредактируйте объекты конфигурации</p>
+                            <p>Сохраните изменения (F7)</p>
+                        </div>
+                        
+                        <div class="configurator-step">
+                            <h5>Шаг 5: Выгрузка изменений</h5>
+                            <p>После завершения работы выгрузите изменения:</p>
+                            <p>Выберите: <strong>Хранилище конфигурации → Выгрузить изменения в хранилище</strong></p>
+                            <p>Введите подробный комментарий о внесенных изменениях</p>
+                            <p>Объекты будут освобождены для других разработчиков</p>
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin-top: 25px; color: #2c3e50;">Инструкция по выполнению (упражнение 3):</h4>
+                    
+                    <div class="configurator-steps">
+                        <h4><i class="fas fa-tag"></i> Управление версиями</h4>
+                        
+                        <div class="configurator-step">
+                            <h5>Шаг 1: Создание версии</h5>
+                            <p>Убедитесь, что все изменения выгружены в хранилище</p>
+                            <p>В конфигураторе выберите: <strong>Хранилище конфигурации → Создать версию...</strong></p>
+                            <p>Укажите номер версии (например, "1.0.0") и описание изменений</p>
+                        </div>
+                        
+                        <div class="configurator-step">
+                            <h5>Шаг 2: Просмотр истории версий</h5>
+                            <p>Для просмотра созданных версий выберите:</p>
+                            <p><strong>Хранилище конфигурации → История хранилища...</strong></p>
+                            <p>Вы увидите список всех версий с датами, авторами и комментариями</p>
+                        </div>
+                        
+                        <div class="configurator-step">
+                            <h5>Шаг 3: Загрузка конкретной версии</h5>
+                            <p>Для загрузки определенной версии в конфигурацию:</p>
+                            <p>В истории хранилища выделите нужную версию и выберите <strong>"Загрузить"</strong></p>
+                            <p>Подтвердите замену текущей конфигурации</p>
+                        </div>
+                        
+                        <div class="configurator-step">
+                            <h5>Шаг 4: Сравнение версий</h5>
+                            <p>Для анализа различий между версиями:</p>
+                            <p>Выберите две версии в истории и нажмите <strong>"Сравнить"</strong></p>
+                            <p>Конфигуратор покажет все изменения между выбранными версиями</p>
+                        </div>
+                        
+                        <div class="configurator-step">
+                            <h5>Шаг 5: Откат к предыдущей версии</h5>
+                            <p>В случае необходимости отката:</p>
+                            <p>Загрузите нужную версию из хранилища</p>
+                            <p>Выгрузите ее как текущее состояние конфигурации</p>
+                            <p>Создайте новую версию с комментарием об откате</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <p><strong>Примечание:</strong> Все операции с хранилищем должны выполняться с правами соответствующего уровня доступа. Административные операции (создание хранилища, управление пользователями) требуют прав администратора хранилища.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="section5.html" class="btn">
+                    <i class="fas fa-arrow-left"></i> Предыдущий раздел
+                </a>
+                <a href="../index.html" class="btn">
+                    <i class="fas fa-home"></i> К списку разделов
+                </a>
+                <div style="flex-grow: 1"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 Учебный курс. Раздел 6: Хранилище конфигурации</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
