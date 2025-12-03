@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Раздел 2: Основные механизмы платформы - Учебный курс</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .code-example {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .code-keyword {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        .code-string {
+            color: #2ecc71;
+        }
+        
+        .code-comment {
+            color: #95a5a6;
+            font-style: italic;
+        }
+        
+        .code-number {
+            color: #e74c3c;
+        }
+        
+        .exercise-list {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 4px solid #9b59b6;
+        }
+        
+        .exercise-list h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .exercise-list ol {
+            padding-left: 20px;
+        }
+        
+        .exercise-list li {
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+        
+        .info-box {
+            background: #e8f4fc;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .mechanism-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .mechanism-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-top: 4px solid #3498db;
+        }
+        
+        .mechanism-card h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .mechanism-card p {
+            color: #34495e;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <h1><i class="fas fa-code"></i> Раздел 2: Основные механизмы платформы 1С</h1>
+            <p>Регистры, документы, общие модули и многопользовательская работа</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="../index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Назад к разделам
+        </a>
+
+        <div class="lecture-container">
+            <h1 class="lecture-title">Основные механизмы платформы 1С</h1>
+            
+            <div class="lecture-content">
+                <h3>1. Ключевые механизмы платформы</h3>
+                <p>Платформа 1С предоставляет комплекс механизмов для построения сложных бизнес-приложений. Эти механизмы обеспечивают целостность данных, многопользовательскую работу и высокую производительность.</p>
+                
+                <div class="mechanism-grid">
+                    <div class="mechanism-card">
+                        <h4>Регистры</h4>
+                        <p>Специализированные объекты для хранения периодических данных: регистры сведений (статичные данные), регистры накопления (обороты и остатки), регистры расчётов (взаиморасчёты).</p>
+                    </div>
+                    
+                    <div class="mechanism-card">
+                        <h4>Документы</h4>
+                        <p>Объекты, фиксирующие хозяйственные операции. Имеют механизм проведения для отражения операций в регистрах и обеспечения двойной записи.</p>
+                    </div>
+                    
+                    <div class="mechanism-card">
+                        <h4>Общие модули</h4>
+                        <p>Библиотеки кода, доступные из разных частей конфигурации. Могут быть серверными, клиентскими или глобальными.</p>
+                    </div>
+                    
+                    <div class="mechanism-card">
+                        <h4>Роли и права</h4>
+                        <p>Система разграничения доступа на основе ролевой модели. Позволяет гибко настраивать права пользователей на объекты и действия.</p>
+                    </div>
+                </div>
+                
+                <h3>2. Регистры: сведения vs накопление</h3>
+                <p>Регистры сведений используются для хранения произвольной информации с возможностью отбора по измерениям. Регистры накопления предназначены для хранения оборотов и остатков, автоматически рассчитываемых системой.</p>
+                
+                <h3>3. Механизм проведения документов</h3>
+                <p>При проведении документа система выполняет запись движений в регистры, что обеспечивает актуальность остатков и отчётов. Проведение может быть отменено (сторнировано) с восстановлением предыдущего состояния данных.</p>
+                
+                <h3>4. Многопользовательская работа</h3>
+                <p>1С поддерживает одновременную работу множества пользователей через механизмы блокировок данных и управление транзакциями. Клиент-серверный вариант обеспечивает лучшую производительность при большом количестве пользователей.</p>
+                
+                <div class="info-box">
+                    <p><strong>Важный аспект:</strong> Правильное использование механизмов платформы критически важно для производительности и надёжности системы, особенно в многопользовательском режиме.</p>
+                </div>
+                
+                <!-- Контрольные вопросы -->
+                <div class="questions-section">
+                    <h2 class="questions-title">Контрольные вопросы</h2>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 1: Что такое регистры сведений и чем они отличаются от регистров накопления?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Регистры сведений хранят произвольные данные с возможностью отбора по измерениям, а регистры накопления предназначены для хранения оборотов и остатков, которые автоматически рассчитываются системой при проведении документов.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 2: Как работает механизм проведения документов?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            При проведении документа система выполняет запись движений в регистры согласно настроенным регистраторам, что обновляет остатки и обеспечивает актуальность отчётов; проведение может быть отменено сторнированием.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 3: Что такое общие модули и для чего они используются?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Общие модули — это библиотеки кода, содержащие функции и процедуры, доступные из разных частей конфигурации; они используются для централизации общей логики и разделения кода на серверную и клиентскую части.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 4: Как организовать многопользовательскую работу в 1С?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Многопользовательская работа организуется через клиент-серверный вариант с использованием СУБД, где сервер обеспечивает управление соединениями, блокировками и транзакциями для одновременной работы многих пользователей.
+                        </div>
+                    </div>
+                    
+                    <div class="question-item">
+                        <h4>Вопрос 5: Что такое блокировки данных и как они влияют на работу системы?</h4>
+                        <button class="answer-btn">Показать ответ</button>
+                        <div class="answer">
+                            Блокировки — это механизм СУБД для предотвращения одновременного изменения одних данных разными пользователями; они обеспечивают целостность данных, но могут вызывать ожидания и снижать производительность при неправильной настройке.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Упражнения для самостоятельной работы -->
+                <div class="exercise-list">
+                    <h3><i class="fas fa-tasks"></i> Упражнения для самостоятельной работы:</h3>
+                    <ol>
+                        <li>Создайте общий модуль с утилитарными функциями</li>
+                        <li>Реализуйте механизм нумерации документов</li>
+                        <li>Настройте ролевую модель доступа для разных пользователей</li>
+                    </ol>
+                    
+                    <h4 style="margin-top: 25px; color: #2c3e50;">Пример выполнения (упражнение 1):</h4>
+                    <div class="code-example">
+                        <span class="code-comment">// Общий модуль "УтилитыРаботыСДанными"</span><br>
+                        <span class="code-comment">// Серверный вызов</span><br>
+                        <br>
+                        <span class="code-comment">// Функция получает следующий номер для документа</span><br>
+                        <span class="code-keyword">Функция</span> ПолучитьСледующийНомер(Префикс = <span class="code-string">""</span>) <span class="code-keyword">Экспорт</span><br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Ищем последний номер в базе данных</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Запрос = <span class="code-keyword">Новый Запрос</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Запрос.Текст = <span class="code-string">"</span><br>
+                        <span class="code-string">    |ВЫБРАТЬ</span><br>
+                        <span class="code-string">    |    Документы.Номер</span><br>
+                        <span class="code-string">    |ИЗ</span><br>
+                        <span class="code-string">    |    Документ.РеализацияТоваровУслуг КАК Документы</span><br>
+                        <span class="code-string">    |УПОРЯДОЧИТЬ ПО</span><br>
+                        <span class="code-string">    |    Документы.Номер УБЫВ</span><br>
+                        <span class="code-string">    |"</span>;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Результат = Запрос.Выполнить();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Выборка = Результат.Выбрать();<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">Если</span> Выборка.Следующий() <span class="code-keyword">Тогда</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    ПоследнийНомер = Выборка.Номер;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    СледующийНомер = ПоследнийНомер + <span class="code-number">1</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">Иначе</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    СледующийНомер = <span class="code-number">1</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">КонецЕсли</span>;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">Возврат</span> Префикс + СледующийНомер;<br>
+                        <br>
+                        <span class="code-keyword">КонецФункции</span><br>
+                        <br>
+                        <span class="code-comment">// Функция проверяет уникальность наименования в справочнике</span><br>
+                        <span class="code-keyword">Функция</span> ПроверитьУникальностьНаименования(Наименование, СсылкаНаОбъект = <span class="code-keyword">Неопределено</span>) <span class="code-keyword">Экспорт</span><br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Запрос = <span class="code-keyword">Новый Запрос</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Запрос.Текст = <span class="code-string">"</span><br>
+                        <span class="code-string">    |ВЫБРАТЬ</span><br>
+                        <span class="code-string">    |    СправочникНоменклатура.Ссылка</span><br>
+                        <span class="code-string">    |ИЗ</span><br>
+                        <span class="code-string">    |    Справочник.Номенклатура КАК СправочникНоменклатура</span><br>
+                        <span class="code-string">    |ГДЕ</span><br>
+                        <span class="code-string">    |    СправочникНоменклатура.Наименование = &Наименование"</span>;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">Если</span> <span class="code-keyword">ЗначениеЗаполнено</span>(СсылкаНаОбъект) <span class="code-keyword">Тогда</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;    Запрос.Текст = Запрос.Текст + <span class="code-string">"</span><br>
+                        <span class="code-string">        |    И СправочникНоменклатура.Ссылка <> &СсылкаНаОбъект"</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">КонецЕсли</span>;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Запрос.УстановитьПараметр(<span class="code-string">"Наименование"</span>, Наименование);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Запрос.УстановитьПараметр(<span class="code-string">"СсылкаНаОбъект"</span>, СсылкаНаОбъект);<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Результат = Запрос.Выполнить();<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">Возврат</span> <span class="code-keyword">НЕ</span> Результат.Пустой();<br>
+                        <br>
+                        <span class="code-keyword">КонецФункции</span>
+                    </div>
+                    
+                    <div class="info-box">
+                        <p><strong>Подсказка для упражнения 2:</strong> Реализуйте функцию нумерации в модуле объекта документа, которая будет вызываться при записи и использовать префикс, год и последовательный номер.</p>
+                        <p><strong>Подсказка для упражнения 3:</strong> Создайте разные роли (например, "Оператор", "Бухгалтер", "Администратор") и настройте права доступа к справочникам, документам и отчётам для каждой роли.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="section1.html" class="btn">
+                    <i class="fas fa-arrow-left"></i> Предыдущий раздел
+                </a>
+                <a href="../index.html" class="btn">
+                    <i class="fas fa-home"></i> К списку разделов
+                </a>
+                <a href="section3.html" class="btn">
+                    Следующий раздел <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 Учебный курс. Раздел 2: Основные механизмы платформы</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
